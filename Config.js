@@ -22,7 +22,10 @@ import {
 class Config {
     constructor() {
         this.initialize(this)
+
         this.addDependency("Announce to guild", "Rng Announcer")
+        this.addDependency("Death Message Text","Dungeons Death Messages")
+        this.addDependency("Party Blacklist","Enable Blacklist")
 
         const lines = [
             "",
