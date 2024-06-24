@@ -22,6 +22,7 @@ import {
 class Config {
     constructor() {
         this.initialize(this)
+        this.addDependency("Announce to guild", "Rng Announcer")
 
         const lines = [
             "",
@@ -38,6 +39,8 @@ class Config {
             &2GreenV1 & x45k are very cool and cool
             `
         )
+
+
 
     }
 
@@ -106,6 +109,8 @@ class Config {
 
    */
 
+
+
     // ---------------------------------------------------------------
     // General
 
@@ -119,11 +124,20 @@ class Config {
 
     @SwitchProperty({
         name: "Loading Messages",
-        description: "Enable/disable the [WEED CLIENT] loading... messages.",
+        description: "Enable/disable the [PLANT CLIENT] loading... messages.",
         category: "General",
         subcategory: "Loading"
     })
     enableloadingmessages = false;
+
+    @SwitchProperty({
+        name: "Copy Chat",
+        description: "Allows you to copy chat by holding left Ctrl + LMB",
+        category: "General",
+        subcategory: "Copy Chat"
+    })
+    enableCopyChat = false;
+
 
     // ---------------------------------------------------------------
     // Dungeons
@@ -153,7 +167,7 @@ class Config {
     })
     enableRngAnnounce = false;
 
-    @CheckboxProperty({
+    @SwitchProperty({
         name: "Announce to guild",
         description: "Also announce RNG Meter drops to you guild. (Requires Rng Announcer to be on!)",
         category: "Dungeons",
