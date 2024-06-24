@@ -25,6 +25,7 @@ class Config {
 
         const lines = [
             "",
+            "&a/setwindowname <WindowName>",
             ""
         ]
         const maxLength = Math.max(...lines.map(a => Renderer.getStringWidth(a)))
@@ -118,10 +119,10 @@ class Config {
     enableAutoGfs = false;
 
     @SwitchProperty({
-        name: "Rng Announcer",
+        name: "RNG Announcer",
         description: "Announces drops from RNG Meter to your party.",
         category: "Dungeons",
-        subcategory: "General"
+        subcategory: "RNG Announcer"
     })
     enableRngAnnounce = false;
 
@@ -129,7 +130,7 @@ class Config {
         name: "Announce To Guild",
         description: "Also announce RNG Meter drops to you guild.",
         category: "Dungeons",
-        subcategory: "General"
+        subcategory: "RNG Announcer"
     })
     enableGuildRngAnnounce = false;
 
