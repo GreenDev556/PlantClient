@@ -126,7 +126,7 @@ class Config {
     enableRngAnnounce = false;
 
     @CheckboxProperty({
-        name: "Announce to guild",
+        name: "Announce To Guild",
         description: "Also announce RNG Meter drops to you guild.",
         category: "Dungeons",
         subcategory: "General"
