@@ -118,20 +118,12 @@ class Config {
     enableAutoGfs = false;
 
     @SwitchProperty({
-        name: "Rng Announcer",
-        description: "Announces drops from RNG Meter to your party.",
-        category: "Dungeons",
-        subcategory: "General"
+        name: "Loading Messages",
+        description: "Enable/disable the [WEED CLIENT] loading... messages.",
+        category: "General",
+        subcategory: "Loading"
     })
-    enableRngAnnounce = false;
-
-    @CheckboxProperty({
-        name: "Announce to guild",
-        description: "Also announce RNG Meter drops to you guild.",
-        category: "Dungeons",
-        subcategory: "General"
-    })
-    enableGuildRngAnnounce = false;
+    enableloadingmessages = false;
 
     // ---------------------------------------------------------------
     // Dungeons
@@ -152,6 +144,22 @@ class Config {
         placeholder: "rip bozo"
     })
     deathMessageText = "rip bozo";
+
+    @SwitchProperty({
+        name: "Rng Announcer",
+        description: "Announces drops from RNG Meter to your party.",
+        category: "Dungeons",
+        subcategory: "RNG Announcing"
+    })
+    enableRngAnnounce = false;
+
+    @CheckboxProperty({
+        name: "Announce to guild",
+        description: "Also announce RNG Meter drops to you guild. (Requires Rng Announcer to be on!)",
+        category: "Dungeons",
+        subcategory: "RNG Announcing"
+    })
+    enableGuildRngAnnounce = false;
 
     // ---------------------------------------------------------------
     // Solvers
