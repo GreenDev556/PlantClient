@@ -132,7 +132,7 @@ class Config {
         name: "Dungeons Death Messages",
         description: "Send a message in partychat when someone dies in a dungeon",
         category: "Dungeons",
-        subcategory: "General"
+        subcategory: "Death Message"
     })
     deathMessage = false;
 
@@ -140,7 +140,7 @@ class Config {
         name: "Death Message Text",
         description: "The text sent on dungeon death.\nUse {name} to use the dead player's name.\nUse a comma to use many messages.",
         category: "Dungeons",
-        subcategory: "General",
+        subcategory: "Death Message",
         placeholder: "rip bozo"
     })
     deathMessageText = "rip bozo";
@@ -160,6 +160,14 @@ class Config {
         subcategory: "RNG Announcing"
     })
     enableGuildRngAnnounce = false;
+
+    @SwitchProperty({
+        name: "Warp Assurance",
+        description: "Warps party when dungeon countdown starts.",
+        category: "Dungeons",
+        subcategory: "Warp Assurance"
+    })
+    enableWarpAssurance = false;
 
     // ---------------------------------------------------------------
     // Solvers
