@@ -3,7 +3,7 @@ import Party from "../../BloomCore/Party";
 
 register("chat", () => {
     if (!Config.enableWarpAssurance) return
-    if (Party.leader() !== Player.getName()) return
+    if (Party.leader !== Player.getName()) return
 
     ChatLib.command("p warp")
 
