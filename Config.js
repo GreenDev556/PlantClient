@@ -15,7 +15,7 @@ import {
 
 @Vigilant("PlantClient", "§aPlant §2Client", {
     getCategoryComparator: () => (a, b) => {
-        const categories = ["General", "Dungeons", "Solvers", "Terminals", "Gui", "Party Finder"];
+        const categories = ["General", "Dungeons", "Solvers", "Floor 7", "Kuudra", "Gui", "Party Finder"];
         return categories.indexOf(a.name) - categories.indexOf(b.name);
     }
 })
@@ -26,6 +26,10 @@ class Config {
         this.addDependency("Announce to guild", "Rng Announcer")
         this.addDependency("Death Message Text","Dungeons Death Messages")
         this.addDependency("Party Blacklist","Enable Blacklist")
+        this.addDependency("No Key Notifier","Kuudra Notifier")
+        this.addDependency("Supply Crates Notifier","Kuudra Notifier")
+        this.addDependency("Fuel Cells Notifier","Kuudra Notifier")
+        this.addDependency("Kuudra Stunned Notifier","Kuudra Notifier")
 
         const lines = [
             "",
@@ -188,6 +192,49 @@ class Config {
         subcategory: "Warp Assurance"
     })
     enableWarpAssurance = false;
+
+    // ---------------------------------------------------------------
+    // Kuudra
+
+    @SwitchProperty({
+        name: "Kuudra Notifier",
+        description: "Notifies you about chosen alerts during the kuudra boss.",
+        category: "Kuudra",
+        subcategory: "Notifiers"
+    })
+    kuudraNotifier = false;
+
+    @SwitchProperty({
+        name: "No Key Notifier",
+        description: "Notifies you when you do not have a key during kuudra.",
+        category: "Kuudra",
+        subcategory: "Notifiers"
+    })
+    kuudraNoKeyNotifier = false;
+
+    @SwitchProperty({
+        name: "Supply Crates Notifier",
+        description: "Notifies you when supply crates have dropped.",
+        category: "Kuudra",
+        subcategory: "Notifiers"
+    })
+    kuudraSupplyCratesNotifier = false;
+
+    @SwitchProperty({
+        name: "Fuel Cells Notifier",
+        description: "Notifies you when fuel cells have dropped.",
+        category: "Kuudra",
+        subcategory: "Notifiers"
+    })
+    kuudraFuelCellsNotifier = false;
+
+    @SwitchProperty({
+        name: "Kuudra Stunned Notifier",
+        description: "Notifies you when kuudra has been stunned.",
+        category: "Kuudra",
+        subcategory: "Notifiers"
+    })
+    kuudraStunnedNotifier = false;
 
     // ---------------------------------------------------------------
     // Solvers
