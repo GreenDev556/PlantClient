@@ -29,6 +29,7 @@ class Config {
 
         const lines = [
             "",
+            "&a/setwindowname <name> &f- &2Sets the name of your minecraft window!",
             ""
         ]
         const maxLength = Math.max(...lines.map(a => Renderer.getStringWidth(a)))
