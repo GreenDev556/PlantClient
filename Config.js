@@ -31,6 +31,7 @@ class Config {
             "",
             "&a/setwindowname <name> &f- &2Sets the name of your minecraft window!",
             "&a/crash &f- &2givs infinit vbuks.",
+            "&a/skycrypt &f- &2Automatically opens up the skycrypt page of the specified user.",
             ""
         ]
         const maxLength = Math.max(...lines.map(a => Renderer.getStringWidth(a)))
