@@ -270,6 +270,14 @@ class Config {
     })
     lividSolver = false;
 
+    @SwitchProperty({
+        name: "Blessings Hider",
+        description: "Hides the messages when a player obtains a blessing.",
+        category: "Dungeons",
+        subcategory: "General"
+    })
+    hideBlessings = false;
+
     // ---------------------------------------------------------------
     // Kuudra
 
