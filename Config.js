@@ -30,6 +30,14 @@ class Config {
         this.addDependency("Supply Crates Notifier","Kuudra Notifier")
         this.addDependency("Fuel Cells Notifier","Kuudra Notifier")
         this.addDependency("Kuudra Stunned Notifier","Kuudra Notifier")
+        this.addDependency("F7 P1","F7 Phase Messages")
+        this.addDependency("F7P1 Message","F7 P1")
+        this.addDependency("F7 P2", "F7 Phase Messages")
+        this.addDependency("F7P2 Message", "F7 P2")
+        this.addDependency("F7 P3", "F7 Phase Messages")
+        this.addDependency("F7P3 Message", "F7 P3")
+        this.addDependency("F7 P4", "F7 Phase Messages")
+        this.addDependency("F7P4 Message", "F7 P4")
 
         const lines = [
             "",
@@ -249,6 +257,82 @@ class Config {
 
     // ---------------------------------------------------------------
     // Terminals
+
+    @SwitchProperty({
+        name: "F7 Phase Messages",
+        description: "Automatically sends a message when you enter F7 phases of your choice.",
+        category: "Floor 7",
+        subcategory: "Auto Messages"
+    })
+    f7p2automessag = false;
+
+    @SwitchProperty({
+        name: "F7 P1",
+        description: "Automatically sends a message when you enter F7P1.",
+        category: "Floor 7",
+        subcategory: "Auto Messages"
+    })
+    f7p1automessage = false;
+
+    @TextProperty({
+        name: "F7P1 Message",
+        description: "Message that is sent when you enter F7P1",
+        category: "Floor 7",
+        subcategory: "Auto Messages",
+        placeholder: "ill rc"
+    })
+    f7p1custommessage = "";
+
+    @SwitchProperty({
+        name: "F7 P2",
+        description: "Automatically sends a message when you enter F7P2.",
+        category: "Floor 7",
+        subcategory: "Auto Messages"
+    })
+    f7p2automessage = false;
+
+    @TextProperty({
+        name: "F7P2 Message",
+        description: "Message that is sent when you enter F7P2",
+        category: "Floor 7",
+        subcategory: "Auto Messages",
+        placeholder: "ill yellow pad, someone take green"
+    })
+    f7p2custommessage = "";
+
+    @SwitchProperty({
+        name: "F7 P3",
+        description: "Automatically sends a message when you enter F7P3.",
+        category: "Floor 7",
+        subcategory: "Auto Messages"
+    })
+    f7p3automessage = false;
+
+    @TextProperty({
+        name: "F7P3 Message",
+        description: "Message that is sent when you enter F7P3",
+        category: "Floor 7",
+        subcategory: "Auto Messages",
+        placeholder: "ill do devs"
+    })
+    f7p3custommessage = "";
+
+    @SwitchProperty({
+        name: "F7 P4",
+        description: "Automatically sends a message when you enter F7P4.",
+        category: "Floor 7",
+        subcategory: "Auto Messages"
+    })
+    f7p4automessage = false;
+
+    @TextProperty({
+        name: "F7P4 Message",
+        description: "Message that is sent when you enter F7P4",
+        category: "Floor 7",
+        subcategory: "Auto Messages",
+        placeholder: "ill ice spray"
+    })
+    f7p4custommessage = "";
 
     // ---------------------------------------------------------------
     // GUI
