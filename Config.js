@@ -262,6 +262,14 @@ class Config {
     })
     bloodClearedMessage = "blood is full go clear it fuckers";
 
+    @SwitchProperty({
+        name: "Livid Finder",
+        description: "Finds the correct livid for you.",
+        category: "Dungeons",
+        subcategory: "Finders"
+    })
+    lividSolver = false;
+
     // ---------------------------------------------------------------
     // Kuudra
 
