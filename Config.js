@@ -252,6 +252,14 @@ class Config {
     })
     kuudraStunnedNotifier = false;
 
+    @SwitchProperty({
+        name: "Vanquisher Notifier",
+        description: "Notifies you when a vanquisher spawns.",
+        category: "Kuudra",
+        subcategory: "Notifiers"
+    })
+    vanqNotifier = false;
+
     // ---------------------------------------------------------------
     // Solvers
 
