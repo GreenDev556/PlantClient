@@ -44,6 +44,7 @@ class Config {
         this.addDependency("Blood Cleared Message", "On Blood Cleared")
         this.addDependency("Auto GFS Pearls", "Auto GFS")
         this.addDependency("Auto GFS Jerrys", "Auto GFS")
+        this.addDependency("Auto GFS Decoys", "Auto GFS")
 
         const lines = [
             "",
@@ -161,6 +162,14 @@ class Config {
         subcategory: "Auto GFS"
     })
     enableAutoGfsJerrys = false;
+
+    @SwitchProperty({
+        name: "Auto GFS Decoys",
+        description: "Automatically gets decoys from sacks if you run out.",
+        category: "General",
+        subcategory: "Auto GFS"
+    })
+    enableAutoGfsDecoys = false;
 
     @SwitchProperty({
         name: "Loading Messages",
