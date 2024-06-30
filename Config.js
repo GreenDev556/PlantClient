@@ -42,6 +42,8 @@ class Config {
         this.addDependency("On Blood Cleared", "Blood Messages")
         this.addDependency("Blood Full Message", "On Blood Full")
         this.addDependency("Blood Cleared Message", "On Blood Cleared")
+        this.addDependency("Auto GFS Pearls", "Auto GFS")
+        this.addDependency("Auto GFS Jerrys", "Auto GFS")
 
         const lines = [
             "",
@@ -138,11 +140,27 @@ class Config {
 
     @SwitchProperty({
         name: "Auto GFS",
-        description: "Automatically gets pearls from sacks if you run out.",
+        description: "Gets specified items from your sacks.",
         category: "General",
         subcategory: "Auto GFS"
     })
     enableAutoGfs = false;
+
+    @SwitchProperty({
+        name: "Auto GFS Pearls",
+        description: "Automatically gets pearls from sacks if you run out.",
+        category: "General",
+        subcategory: "Auto GFS"
+    })
+    enableAutoGfsPearls = false;
+
+    @SwitchProperty({
+        name: "Auto GFS Jerrys",
+        description: "Automatically gets inflatable jerrys from sacks if you run out.",
+        category: "General",
+        subcategory: "Auto GFS"
+    })
+    enableAutoGfsJerrys = false;
 
     @SwitchProperty({
         name: "Loading Messages",
