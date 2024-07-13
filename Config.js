@@ -91,7 +91,7 @@ config
 .addSwitch({
     category: "General",
     configName: "hideLightning",
-    name: "Hide Lightning",
+    title: "Hide Lightning",
     description: "Hides lightning.",
     subcategory: "Misc"
 })
