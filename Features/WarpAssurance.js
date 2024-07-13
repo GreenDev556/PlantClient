@@ -1,10 +1,12 @@
-import Config from "../Config";
+import config from "../Config"
 import Party from "../../BloomCore/Party";
 
 register("chat", () => {
-    if (!Config.enableWarpAssurance) return
-    if (Party.leader !== Player.getName()) return
+    setTimeout(() => {
+        if (!config().enableWarpAssurance) return
+        if (Party.leader !== Player.getName()) return
+        ChatLib.command("p warp")
+        Thread.sleep(1000)
+    }, 0)
 
-    ChatLib.command("p warp")
-
-}).setCriteria("Starting in 4 seconds.")
+}).setCriteria("${username} is now ready!")

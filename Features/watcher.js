@@ -1,15 +1,15 @@
-import Config from "../Config"
+import config from "../Config"
 
 register("chat", () => {
-    if (Config.onBloodFull) {
-        ChatLib.command(`pc ${Config.bloodFullMessage}`);
-        setTitle('BLOOD ROOM HAS BEEN CLEARED!', "", 0, 25, 5, 70);
+    if (config().onBloodFull) {
+        ChatLib.command(`pc ${config().bloodFullMessage}`);
+        Client.showTitle('BLOOD ROOM HAS BEEN CLEARED!', "", 0, 25, 5, 70);
     }
 }).setCriteria("[BOSS] The Watcher: You have proven yourself. You may pass.");
 
 register("chat", () => {
-    if (Config.onBloodClear) {
-        setTitle('BLOOD ROOM IS FULL!', "", 0, 25, 5, 70);
-        ChatLib.command(`pc ${Config.bloodClearedMessage}`);
+    if (config().onBloodClear) {
+        Client.showTitle('BLOOD ROOM IS FULL!', "", 0, 25, 5, 70);
+        ChatLib.command(`pc ${config().bloodClearedMessage}`);
     }
 }).setCriteria("[BOSS] The Watcher: That will be enough for now.");

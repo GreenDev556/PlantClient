@@ -1,7 +1,7 @@
-import Config from "../Config";
+import config from "../Config";
 
 register("chatComponentClicked", (message) => {
-    if (!Config.enableCopyChat) return
+    if (!config().enableCopyChat) return
     if (!Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) return
     const copyString = message.getText().removeFormatting()
     ChatLib.command(`ct copy ${copyString}`, true)

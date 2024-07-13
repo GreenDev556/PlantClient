@@ -1,4 +1,4 @@
-import config from "../Config"
+import Config from "../unusedconfig"
 
 const blessings = [
     /^DUNGEON BUFF! .+ found a Blessing of .+!$/,
@@ -12,7 +12,7 @@ const blessings = [
 
 blessings.forEach(regex => {
     register("chat", (event) => {
-        if (!config().hideBlessings) return
-        cancel(event)
+        if (!Config.blessingNotifier) return
+        Client.showTitle('&r&9&lBlessing!', "", 10, 100, 10);
     }).setCriteria(regex)
 })

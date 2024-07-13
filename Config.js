@@ -1,492 +1,530 @@
-import { Color, padText } from "../BloomCore/utils/Utils";
-import {
-    @ButtonProperty,
-    @CheckboxProperty,
-    Color,
-    @ColorProperty,
-    @PercentSliderProperty,
-    @SelectorProperty,
-    @SwitchProperty,
-    @TextProperty,
-    @Vigilant,
-    @SliderProperty,
-    @NumberProperty,
-} from '../Vigilance/index';
+import Settings from "../Amaterasu/core/Settings"
+import DefaultConfig from "../Amaterasu/core/DefaultConfig"
+const config = new DefaultConfig("Plant Client", "data/settings.json")
+const schemePath = "data/ColorScheme.json"
 
-@Vigilant("PlantClient", "§aPlant §2Client", {
-    getCategoryComparator: () => (a, b) => {
-        const categories = ["General", "Dungeons", "Solvers", "Floor 7", "Kuudra", "Mining", "Gui", "Party Finder"];
-        return categories.indexOf(a.name) - categories.indexOf(b.name);
+export const myGui = new Gui()
+
+const CHANGELOG = `# §bPlant Client v1.1.0\n ${FileLib.read("PlantClient", "changelog.md")}`
+
+config
+// General
+.addSwitch({
+    category: "General",
+    configName: "enableAutoGfs",
+    title: "Auto GFS",
+    description: "Gets specified items from your sacks.",
+    subcategory: "Auto GFS",
+})
+.addSwitch({
+    category: "General",
+    configName: "enableAutoGfsPearls",
+    title: "Auto GFS Pearls",
+    description: "Automatically gets pearls from sacks if you run out.",
+    subcategory: "Auto GFS",
+    shouldShow(config) {
+        return config.enableAutoGfs
     }
 })
-class Config {
-    constructor() {
-        this.initialize(this)
-
-        this.addDependency("Announce to guild", "Rng Announcer")
-        this.addDependency("Death Message Text","Dungeons Death Messages")
-        this.addDependency("Party Blacklist","Enable Blacklist")
-        this.addDependency("No Key Notifier","Kuudra Notifier")
-        this.addDependency("Supply Crates Notifier","Kuudra Notifier")
-        this.addDependency("Fuel Cells Notifier","Kuudra Notifier")
-        this.addDependency("Kuudra Stunned Notifier","Kuudra Notifier")
-        this.addDependency("F7 P1","F7 Phase Messages")
-        this.addDependency("F7P1 Message","F7 P1")
-        this.addDependency("F7 P2", "F7 Phase Messages")
-        this.addDependency("F7P2 Message", "F7 P2")
-        this.addDependency("F7 P3", "F7 Phase Messages")
-        this.addDependency("F7P3 Message", "F7 P3")
-        this.addDependency("F7 P4", "F7 Phase Messages")
-        this.addDependency("F7P4 Message", "F7 P4")
-        this.addDependency("On Blood Full", "Blood Messages")
-        this.addDependency("On Blood Cleared", "Blood Messages")
-        this.addDependency("Blood Full Message", "On Blood Full")
-        this.addDependency("Blood Cleared Message", "On Blood Cleared")
-        this.addDependency("Auto GFS Pearls", "Auto GFS")
-        this.addDependency("Auto GFS Jerrys", "Auto GFS")
-        this.addDependency("Auto GFS Decoys", "Auto GFS")
-
-        const lines = [
-            "",
-            "&a/setwindowname <name> &f- &2Sets the name of your minecraft window!",
-            "&a/crash &f- &2givs infinit vbuks.",
-            "&a/skycrypt &f- &2Automatically opens up the skycrypt page of the specified user.",
-            ""
-        ]
-        const maxLength = Math.max(...lines.map(a => Renderer.getStringWidth(a)))
-
-        this.setCategoryDescription("General", 
-            `
-            &a&l&nPlant
-
-            ${lines.map(a => a !== "" ? padText(a + "&0", ".", maxLength) : a).join("\n")}
-
-            &2GreenV1 & x45k are very cool and cool
-            `
-        )
-
-
-
+.addSwitch({
+    category: "General",
+    configName: "enableAutoGfsJerrys",
+    title: "Auto GFS Jerrys",
+    description: "Automatically gets inflatable jerrys from sacks if you run out.",
+    subcategory: "Auto GFS",
+    shouldShow(config) {
+        return config.enableAutoGfs
     }
+})
+.addSwitch({
+    category: "General",
+    configName: "enableAutoGfsJerrys",
+    title: "Auto GFS Decoys",
+    description: "Automatically gets decoys from sacks if you run out.",
+    subcategory: "Auto GFS",
+    shouldShow(config) {
+        return config.enableAutoGfs
+    }
+})
+.addSwitch({
+    category: "General",
+    configName: "enableloadingmessages",
+    title: "Loading Messages",
+    description: "Enable/disable the [WEED CLIENT] loading... messages.",
+    subcategory: "Loading"
+})
+.addSwitch({
+    category: "General",
+    configName: "enableCopyChat",
+    title: "Copy Chat",
+    description: "Allows you to copy chat by holding left Ctrl + LMB",
+    subcategory: "Copy Chat"
+})
+.addSwitch({
+    category: "General",
+    configName: "copyDrops",
+    title: "Copy Drops",
+    description: "Copies rarer drops to clipboard.",
+    subcategory: "Copy Chat"
+})
+.addSwitch({
+    category: "General",
+    configName: "copyRareDrops",
+    title: "Copy Rare Drops",
+    description: "Copies rare drops to clipboard.",
+    subcategory: "Copy Chat",
+    shouldShow(config) {
+        return config.copyDrops
+    }
+})
+.addSwitch({
+    category: "General",
+    configName: "copySuperRareDrops",
+    title: "Copy Super Rare Drops",
+    description: "Copies super rare drops to clipboard.",
+    category: "General",
+    subcategory: "Copy Chat",
+    shouldShow(config) {
+        return config.copyDrops
+    }
+})
+.addSwitch({
+    category: "General",
+    configName: "hideLightning",
+    name: "Hide Lightning",
+    description: "Hides lightning.",
+    subcategory: "Misc"
+})
+.addSwitch({
+    category: "General",
+    configName: "showSouls",
+    title: "Fairy Souls",
+    description: "Show waypoints to fairy souls [AUTO UPDATES]\n&4&lMay not show waypoints if souls are not rendered.",
+    subcategory: "Fairy Souls"
+})
 
-   /*
-    Example UI elements!
-        @SwitchProperty({
-        name: "Hide Lightning",
-        description: "Stops lightning from being rendered.",
-        category: "General",
-        subcategory: "Lightning"
-    })
-    hideLightning = false
+// ---------------------------------------------------------------
+// Dungeons
 
-    @SliderProperty({
-        name: "Delay",
-        description: "Delay before accepting the party invite.",
-        category: "General",
-        subcategory: "Reparty",
-        min: 0,
-        max: 1000
-    })
-    autoRejoinRepartyDelay = 500;
+.addSwitch({
+    category: "Dungeons",
+    configName: "ffTimer",
+    title: "Fire Freeze Timer",
+    description: "Notifies you when to fire freeze in the m3 boss fight",
+    subcategory: "M3"
+})
+.addSwitch({
+    category: "Dungeons",
+    configName: "autoRejoinDungeons",
+    title: "Auto Rejoin",
+    description: "Auto rejoins dungeons when they end (many thanks to xef addons)",
+    subcategory: "General"
+})
+.addSwitch({
+    category: "Dungeons",
+    configName: "bloodDialogueSkip",
+    title: "Blood Dialogue Skip",
+    description: "Notifies you when to clear blood to skip the dialogue from the watcher",
+    subcategory: "General"
+})
+.addSwitch({
+    category: "Dungeons",
+    configName: "deathMessage",
+    title: "Dungeons Death Messages",
+    description: "Send a message in partychat when someone dies in a dungeon",
+    subcategory: "General"
+})
+.addTextInput({
+    category: "Dungeons",
+    configName: "deathMessageText",
+    title: "Death Message Text",
+    description: "The text sent on dungeon death. Use {name} to use the dead player's name (many thanks to azuredclient)",
+    subcategory: "General",
+    placeholder: "rip bozo",
+    shouldShow(config) {
+        return config.deathMessage
+    }
+})
+.addSwitch({
+    category: "Dungeons",
+    configName: "enableRngAnnounce",
+    title: "Rng Announcer",
+    description: "Announces drops from RNG Meter to your party",
+    subcategory: "RNG Announcing"
+})
+.addSwitch({
+    category: "Dungeons",
+    configName: "enableGuildRngAnnounce",
+    title: "Announce to guild",
+    description: "Also announce RNG Meter drops to you guild (requires rng announcer to be on!)",
+    subcategory: "RNG Announcing"
+})
+.addSwitch({
+    category: "Dungeons",
+    configName: "enableWarpAssurance",
+    title: "Warp Assurance",
+    description: "Warps party when dungeon countdown starts",
+    subcategory: "Warping"
+})
+.addSwitch({
+    category: "Dungeons",
+    configName: "warpOnPlayerKick",
+    title: "Warp On Player Kick",
+    description: "Warps a player back to a dungeon when they are disconnected (will not work if the player got limboed!)",
+    subcategory: "Warping"
+})
+.addSwitch({
+    category: "Dungeons",
+    configName: "enableBloodMessages",
+    title: "Blood Messages",
+    description: "Sends a message when either blood is full, blood has been cleared, or both",
+    subcategory: "Blood Room"
+})
+.addSwitch({
+    category: "Dungeons",
+    configName: "onBloodFull",
+    title: "On Blood Full",
+    description: "Sends a message when blood has filled",
+    subcategory: "Blood Room",
+    shouldShow(config) {
+        return config.enableBloodMessages
+    }
+})
+.addTextInput({
+    category: "Dungeons",
+    configName: "bloodFullMessage",
+    title: "Blood Full Message",
+    description: "Message that is sent when blood becomes full",
+    subcategory: "Blood Room",
+    placeholder: "blood has been cleared hurry up and go in",
+    shouldShow(config) {
+        return config.onBloodFull
+    }
+})
+.addSwitch({
+    category: "Dungeons",
+    configName: "onBloodClear",
+    title: "On Blood Cleared",
+    description: "Sends a message when blood has been cleared",
+    subcategory: "Blood Room",
+    shouldShow(config) {
+        return config.enableBloodMessages
+    }
+})
+.addTextInput({
+    category: "Dungeons",
+    configName: "bloodClearedMessage",
+    title: "Blood Cleared Message",
+    description: "Message that is sent when blood is cleared",
+    subcategory: "Blood Room",
+    placeholder: "blood is full go clear it fuckers",
+    shouldShow(config) {
+        return config.onBloodClear
+    }
+})
+.addSwitch({
+    category: "Dungeons",
+    configName: "lividSolver",
+    title: "Livid Finder",
+    description: "Finds the correct livid for you (many thanks to bloom)",
+    subcategory: "Finders"
+})
+.addSwitch({
+    category: "Dungeons",
+    configName: "hideBlessings",
+    title: "Blessings Hider",
+    description: "Hides the messages when a player obtains a blessing",
+    subcategory: "General"
+})
+.addSwitch({
+    category: "Dungeons",
+    configName: "blessingNotifier",
+    title: "Blessings Notifier",
+    description: "Notifies you when a player obtains a blessing",
+    subcategory: "General"
+})
+.addSwitch({
+    category: "Dungeons",
+    configName: "autoArchitectDraft",
+    title: "Auto Architects Draft",
+    description: "Automatically grabs a draft from your sacks when a puzzle is failed",
+    subcategory: "General"
+})
+.addSwitch({
+    category: "Dungeons",
+    configName: "hideSoulweaverSkulls",
+    title: "Hide Soulweavers Skulls",
+    description: "Hides the skulls spawned by the soulweavers gloves",
+    subcategory: "General"
+})
 
-    @ButtonProperty({
-        name: "Move Toggle Sprint",
-        description: "Move",
-        category: "General",
-        subcategory: "Toggle Sprint"
-    })
-    MoveToggleSprint() {
-         this.toggleSprintMove.open()
-    };
+// ---------------------------------------------------------------
+// Floor 7
 
-    @TextProperty({
-        name: "Sprinting Enabled Text",
-        category: "The text to be showed when toggle sprint is enabled",
-        category: "General",
-        subcategory: "Toggle Sprint",
-        placeholder: "Sprinting Enabled"
-    })
-    toggleSprintText = "";
+.addSwitch({
+    category: "Floor 7",
+    configName: "termHighlight",
+    title: "Terminal Highlighter",
+    description: "Highlights terminals in F7P3",
+    subcategory: "Terminals"
+})
+.addSwitch({
+    category: "Floor 7",
+    configName: "f7p2automessag",
+    title: "F7 Phase Messages",
+    description: "Automatically sends a message when you enter F7 phases of your choice",
+    subcategory: "Auto Messages"
+})
+.addSwitch({
+    category: "Floor 7",
+    configName: "f7p1automessage",
+    title: "F7 P1",
+    description: "Automatically sends a message when you enter F7P1",
+    subcategory: "Auto Messages",
+    shouldShow(config) {
+        return config.f7p2automessag
+    }
+})
+.addSwitch({
+    category: "Floor 7",
+    configName: "f7p2automessage",
+    title: "F7 P2",
+    description: "Automatically sends a message when you enter F7P2",
+    subcategory: "Auto Messages",
+    shouldShow(config) {
+        return config.f7p2automessag
+    }
+})
+.addSwitch({
+    category: "Floor 7",
+    configName: "f7p3automessage",
+    title: "F7 P3",
+    description: "Automatically sends a message when you enter F7P3",
+    subcategory: "Auto Messages",
+    shouldShow(config) {
+        return config.f7p2automessag
+    }
+})
+.addSwitch({
+    category: "Floor 7",
+    configName: "f7p4automessage",
+    title: "F7 P4",
+    description: "Automatically sends a message when you enter F7P4",
+    subcategory: "Auto Messages",
+    shouldShow(config) {
+        return config.f7p2automessag
+    }
+})
+.addTextInput({
+    category: "Floor 7",
+    configName: "f7p1custommessage",
+    title: "F7P1 Message",
+    description: "Message that is sent when you enter F7P1",
+    subcategory: "Auto Messages",
+    placeholder: "ill rc",
+    shouldShow(config) {
+        return config.f7p1automessage
+    }
+})
+.addTextInput({
+    category: "Floor 7",
+    configName: "f7p2custommessage",
+    title: "F7P2 Message",
+    description: "Message that is sent when you enter F7P2",
+    subcategory: "Auto Messages",
+    placeholder: "ill yellow pad, someone take green",
+    shouldShow(config) {
+        return config.f7p2automessage
+    }
+})
+.addTextInput({
+    category: "Floor 7",
+    configName: "f7p3custommessage",
+    title: "F7P3 Message",
+    description: "Message that is sent when you enter F7P3",
+    subcategory: "Auto Messages",
+    placeholder: "ill do devs",
+    shouldShow(config) {
+        return config.f7p3automessage
+    }
+})
+.addTextInput({
+    category: "Floor 7",
+    configName: "f7p4custommessage",
+    title: "F7P4 Message",
+    description: "Message that is sent when you enter F7P4",
+    subcategory: "Auto Messages",
+    placeholder: "ill ice spray",
+    shouldShow(config) {
+        return config.f7p4automessage
+    }
+})
+.addSwitch({
+    category: "Floor 7",
+    configName: "fuckDiorite",
+    title: "Fuck Diorite",
+    description: "Turns diorite into glass",
+    subcategory: "Misc"
+})
+.addSwitch({
+    category: "Floor 7",
+    configName: "m7Spots",
+    title: "M7 Spots",
+    description: "Creates waypoints for where you need to go in M7.",
+    subcategory: "M7"
+})
 
-    @SelectorProperty({
-        name: "Highlight Type",
-        description: "How to highlight the block for the etherwarp overlay.",
-        category: "General",
-        subcategory: "Etherwarp",
-        options: [
-            "Edges",
-            "Edges (Phase)",
-            "Filled",
-            "Filled (Phase)",
-            "Both",
-            "Both (Phase)"
-        ]
-    })
-    etherwarpHighlightType = 0;
+// ---------------------------------------------------------------
+// Kuudra
 
-    @ColorProperty({
-        name: "Overlay Color",
-        description: "The color of the overlay when a valid etherwarp spot is found.",
-        category: "General",
-        subcategory: "Etherwarp"
-    })
-    etherwarpOverlayColor = new Color(0, 1, 0, 1);
+.addSwitch({
+    category: "Kuudra",
+    configName: "kuudraNotifier",
+    title: "Kuudra Notifier",
+    description: "Notifies you about chosen alerts during the kuudra boss.",
+    subcategory: "Notifiers"
+})
+.addSwitch({
+    category: "Kuudra",
+    configName: "kuudraNoKeyNotifier",
+    title: "No Key Notifier",
+    description: "Notifies you when you do not have a key during kuudra.",
+    subcategory: "Notifiers",
+    shouldShow(config) {
+        return config.kuudraNotifier
+    }
+})
+.addSwitch({
+    category: "Kuudra",
+    configName: "kuudraSupplyCratesNotifier",
+    title: "Supply Crates Notifier",
+    description: "Notifies you when supply crates have dropped.",
+    subcategory: "Notifiers",
+    shouldShow(config) {
+        return config.kuudraNotifier
+    }
+})
+.addSwitch({
+    category: "Kuudra",
+    configName: "kuudraFuelCellsNotifier",
+    title: "Fuel Cells Notifier",
+    description: "Notifies you when fuel cells have dropped.",
+    subcategory: "Notifiers",
+    shouldShow(config) {
+        return config.kuudraNotifier
+    }
+})
+.addSwitch({
+    category: "Kuudra",
+    configName: "kuudraStunnedNotifier",
+    title: "Kuudra Stunned Notifier",
+    description: "Notifies you when kuudra has been stunned.",
+    category: "Kuudra",
+    subcategory: "Notifiers",
+    shouldShow(config) {
+        return config.kuudraNotifier
+    }
+})
+.addSwitch({
+    category: "Kuudra",
+    configName: "vanqNotifier",
+    title: "Vanquisher Notifier",
+    description: "Notifies you when a vanquisher spawns.",
+    subcategory: "Notifiers",
+    shouldShow(config) {
+        return config.kuudraNotifier
+    }
+})
 
-   */
+// ---------------------------------------------------------------
+// Mining
 
+.addSwitch({
+    category: "Mining",
+    configName: "fiveTimesTitanium",
+    title: "5x Titanium",
+    description: "Notifies you when the 5x titanium event is active",
+    subcategory: "Events"
+})
+.addSwitch({
+    category: "Mining",
+    configName: "miningSpeedBoost",
+    title: "Mining Speed Boost",
+    description: "Notifies you when your mining speed boost ability is ready",
+    subcategory: "General"
+})
+.addSwitch({
+    category: "Mining",
+    configName: "miningSpeedBoostOver",
+    title: "Mining Speed Boost Over",
+    description: "Notifies you when your mining speed boost ability is over",
+    subcategory: "General"
+})
+.addSwitch({
+    category: "Mining",
+    configName: "autoRenewPass",
+    title: "Auto Renew Pass",
+    description: "Automatically renews your crystal hollows pass when it is about to expire",
+    subcategory: "Crystal Hollows"
+})
+.addSwitch({
+    category: "Mining",
+    configName: "powderDisplay",
+    title: "Powder Display",
+    description: "Shows how much powder you have of both gemstone and mithril",
+    subcategory: "Crystal Hollows"
+  })
+.addButton({
+    category: "Mining",
+    configName: "powderGui",
+    title: "Powder GUI",
+    description: "Move the position of the powder info",
+    subcategory: "Crystal Hollows",
+    onClick() {
+        myGui.open()
+    },
+    shouldShow(config) {
+        return config.powderDisplay
+    }
+})
 
+// ---------------------------------------------------------------
+// Party Finder
 
-    // ---------------------------------------------------------------
-    // General
+.addSwitch({
+    category: "Party Finder",
+    configName: "enableBlacklist",
+    title: "Enable Blacklist",
+    description: "Kicks players who's names are added to the blacklist",
+    subcategory: "Blacklist"
+})
+.addTextInput({
+    category: "Party Finder",
+    configName: "playerBlacklistNames",
+    title: "Party Blacklist",
+    description: "Auto kicks names that you choose, separated by spaces",
+    category: "Party Finder",
+    subcategory: "Blacklist",
+    placeholder: "x45k",
+    shouldShow(config) {
+        return config.enableBlacklist
+    }
+})
+.addSwitch({
+    category: "Party Finder",
+    configName: "partyFullAlert",
+    title: "Party Finder Full",
+    description: "Notifies you when your party is full",
+    subcategory: "General"
+})
 
-    @SwitchProperty({
-        name: "Auto GFS",
-        description: "Gets specified items from your sacks.",
-        category: "General",
-        subcategory: "Auto GFS"
-    })
-    enableAutoGfs = false;
+// ---------------------------------------------------------------
+// Testing
 
-    @SwitchProperty({
-        name: "Auto GFS Pearls",
-        description: "Automatically gets pearls from sacks if you run out.",
-        category: "General",
-        subcategory: "Auto GFS"
-    })
-    enableAutoGfsPearls = false;
+const setting = new Settings("Plant Client", config, schemePath)
+    .setCommand("plant", ["plantclient"])
 
-    @SwitchProperty({
-        name: "Auto GFS Jerrys",
-        description: "Automatically gets inflatable jerrys from sacks if you run out.",
-        category: "General",
-        subcategory: "Auto GFS"
-    })
-    enableAutoGfsJerrys = false;
+    .addMarkdown("Changelog", CHANGELOG)
 
-    @SwitchProperty({
-        name: "Auto GFS Decoys",
-        description: "Automatically gets decoys from sacks if you run out.",
-        category: "General",
-        subcategory: "Auto GFS"
-    })
-    enableAutoGfsDecoys = false;
-
-    @SwitchProperty({
-        name: "Loading Messages",
-        description: "Enable/disable the [PLANT CLIENT] loading... messages.",
-        category: "General",
-        subcategory: "Loading"
-    })
-    enableloadingmessages = false;
-
-    @SwitchProperty({
-        name: "Copy Chat",
-        description: "Allows you to copy chat by holding left Ctrl + LMB",
-        category: "General",
-        subcategory: "Copy Chat"
-    })
-    enableCopyChat = false;
-
-    @SwitchProperty({
-        name: "Hide Lightning",
-        description: "Hides lightning.",
-        category: "General",
-        subcategory: "Misc"
-    })
-    hideLightning = false;
-
-    // ---------------------------------------------------------------
-    // Dungeons
-
-    @SwitchProperty({
-        name: "Blood Dialogue Skip",
-        description: "Notifies you when to clear blood to skip the dialogue from the watcher.",
-        category: "Dungeons",
-        subcategory: "General"
-    })
-    bloodDialogueSkip = false;
-
-    @SwitchProperty({
-        name: "Dungeons Death Messages",
-        description: "Send a message in partychat when someone dies in a dungeon",
-        category: "Dungeons",
-        subcategory: "Death Message"
-    })
-    deathMessage = false;
-
-    @TextProperty({
-        name: "Death Message Text",
-        description: "The text sent on dungeon death.\nUse {name} to use the dead player's name.\nUse a comma to use many messages.",
-        category: "Dungeons",
-        subcategory: "Death Message",
-        placeholder: "rip bozo"
-    })
-    deathMessageText = "rip bozo";
-
-    @SwitchProperty({
-        name: "Rng Announcer",
-        description: "Announces drops from RNG Meter to your party.",
-        category: "Dungeons",
-        subcategory: "RNG Announcing"
-    })
-    enableRngAnnounce = false;
-
-    @SwitchProperty({
-        name: "Announce to guild",
-        description: "Also announce RNG Meter drops to you guild. (Requires Rng Announcer to be on!)",
-        category: "Dungeons",
-        subcategory: "RNG Announcing"
-    })
-    enableGuildRngAnnounce = false;
-
-    @SwitchProperty({
-        name: "Warp Assurance",
-        description: "Warps party when dungeon countdown starts.",
-        category: "Dungeons",
-        subcategory: "Warping"
-    })
-    enableWarpAssurance = false;
-
-    @SwitchProperty({
-        name: "Warp On Player Kick",
-        description: "Warps a player back to a dungeon when they are disconnected. (Will not work if the player got limboed!)",
-        category: "Dungeons",
-        subcategory: "Warping"
-    })
-    warpOnPlayerKick = false;
-
-    @SwitchProperty({
-        name: "Blood Messages",
-        description: "Sends a message when either blood is full, blood has been cleared, or both.",
-        category: "Dungeons",
-        subcategory: "Blood Room"
-    })
-    enableBloodMessages = false;
-
-    @SwitchProperty({
-        name: "On Blood Full",
-        description: "Sends a message when blood has filled.",
-        category: "Dungeons",
-        subcategory: "Blood Room"
-    })
-    onBloodFull = false;
-
-    @TextProperty({
-        name: "Blood Full Message",
-        description: "Message that is sent when blood becomes full.",
-        category: "Dungeons",
-        subcategory: "Blood Room",
-        placeholder: "blood has been cleared hurry up and go in"
-    })
-    bloodFullMessage = "blood has been cleared hurry up and go in";
-
-    @SwitchProperty({
-        name: "On Blood Cleared",
-        description: "Sends a message when blood has been cleared.",
-        category: "Dungeons",
-        subcategory: "Blood Room"
-    })
-    onBloodClear = false;
-
-    @TextProperty({
-        name: "Blood Cleared Message",
-        description: "Message that is sent when blood is cleared.",
-        category: "Dungeons",
-        subcategory: "Blood Room",
-        placeholder: "blood is full go clear it fuckers"
-    })
-    bloodClearedMessage = "blood is full go clear it fuckers";
-
-    @SwitchProperty({
-        name: "Livid Finder",
-        description: "Finds the correct livid for you.",
-        category: "Dungeons",
-        subcategory: "Finders"
-    })
-    lividSolver = false;
-
-    @SwitchProperty({
-        name: "Blessings Hider",
-        description: "Hides the messages when a player obtains a blessing.",
-        category: "Dungeons",
-        subcategory: "General"
-    })
-    hideBlessings = false;
-
-    // ---------------------------------------------------------------
-    // Kuudra
-
-    @SwitchProperty({
-        name: "Kuudra Notifier",
-        description: "Notifies you about chosen alerts during the kuudra boss.",
-        category: "Kuudra",
-        subcategory: "Notifiers"
-    })
-    kuudraNotifier = false;
-
-    @SwitchProperty({
-        name: "No Key Notifier",
-        description: "Notifies you when you do not have a key during kuudra.",
-        category: "Kuudra",
-        subcategory: "Notifiers"
-    })
-    kuudraNoKeyNotifier = false;
-
-    @SwitchProperty({
-        name: "Supply Crates Notifier",
-        description: "Notifies you when supply crates have dropped.",
-        category: "Kuudra",
-        subcategory: "Notifiers"
-    })
-    kuudraSupplyCratesNotifier = false;
-
-    @SwitchProperty({
-        name: "Fuel Cells Notifier",
-        description: "Notifies you when fuel cells have dropped.",
-        category: "Kuudra",
-        subcategory: "Notifiers"
-    })
-    kuudraFuelCellsNotifier = false;
-
-    @SwitchProperty({
-        name: "Kuudra Stunned Notifier",
-        description: "Notifies you when kuudra has been stunned.",
-        category: "Kuudra",
-        subcategory: "Notifiers"
-    })
-    kuudraStunnedNotifier = false;
-
-    @SwitchProperty({
-        name: "Vanquisher Notifier",
-        description: "Notifies you when a vanquisher spawns.",
-        category: "Kuudra",
-        subcategory: "Notifiers"
-    })
-    vanqNotifier = false;
-
-    // ---------------------------------------------------------------
-    // Mining
-
-    @SwitchProperty({
-        name: "5x Titanium",
-        description: "Notifies you when the 5x titanium event is active.",
-        category: "Mining",
-        subcategory: "Events"
-    })
-    fiveTimesTitanium = false;
-
-    // ---------------------------------------------------------------
-    // Solvers
-
-    // ---------------------------------------------------------------
-    // Terminals
-
-    @SwitchProperty({
-        name: "F7 Phase Messages",
-        description: "Automatically sends a message when you enter F7 phases of your choice.",
-        category: "Floor 7",
-        subcategory: "Auto Messages"
-    })
-    f7p2automessag = false;
-
-    @SwitchProperty({
-        name: "F7 P1",
-        description: "Automatically sends a message when you enter F7P1.",
-        category: "Floor 7",
-        subcategory: "Auto Messages"
-    })
-    f7p1automessage = false;
-
-    @TextProperty({
-        name: "F7P1 Message",
-        description: "Message that is sent when you enter F7P1",
-        category: "Floor 7",
-        subcategory: "Auto Messages",
-        placeholder: "ill rc"
-    })
-    f7p1custommessage = "";
-
-    @SwitchProperty({
-        name: "F7 P2",
-        description: "Automatically sends a message when you enter F7P2.",
-        category: "Floor 7",
-        subcategory: "Auto Messages"
-    })
-    f7p2automessage = false;
-
-    @TextProperty({
-        name: "F7P2 Message",
-        description: "Message that is sent when you enter F7P2",
-        category: "Floor 7",
-        subcategory: "Auto Messages",
-        placeholder: "ill yellow pad, someone take green"
-    })
-    f7p2custommessage = "";
-
-    @SwitchProperty({
-        name: "F7 P3",
-        description: "Automatically sends a message when you enter F7P3.",
-        category: "Floor 7",
-        subcategory: "Auto Messages"
-    })
-    f7p3automessage = false;
-
-    @TextProperty({
-        name: "F7P3 Message",
-        description: "Message that is sent when you enter F7P3",
-        category: "Floor 7",
-        subcategory: "Auto Messages",
-        placeholder: "ill do devs"
-    })
-    f7p3custommessage = "";
-
-    @SwitchProperty({
-        name: "F7 P4",
-        description: "Automatically sends a message when you enter F7P4.",
-        category: "Floor 7",
-        subcategory: "Auto Messages"
-    })
-    f7p4automessage = false;
-
-    @TextProperty({
-        name: "F7P4 Message",
-        description: "Message that is sent when you enter F7P4",
-        category: "Floor 7",
-        subcategory: "Auto Messages",
-        placeholder: "ill ice spray"
-    })
-    f7p4custommessage = "";
-
-    // ---------------------------------------------------------------
-    // GUI
-
-    // ---------------------------------------------------------------
-    // Party Finder
-
-    @SwitchProperty({
-        name: "Enable Blacklist",
-        description: "Kicks players who's names are added to the blacklist.",
-        category: "Party Finder",
-        subcategory: "Blacklist"
-    })
-    enableBlacklist = false;
-
-    @TextProperty({
-        name: "Party Blacklist",
-        description: "Auto kicks names that you choose, separated by spaces.",
-        category: "Party Finder",
-        subcategory: "Blacklist",
-        placeholder: ""
-    })
-    playerBlacklistNames = "";
-
-    @SwitchProperty({
-        name: "Party Finder Full",
-        description: "Notifies you when your party is full.",
-        category: "Party Finder",
-        subcategory: "General"
-    })
-    partyFullAlert = false;
-    
-}
-export default new Config()
+// export
+export default () => setting.settings
